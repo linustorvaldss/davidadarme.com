@@ -1,0 +1,10 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      - NEXT_PUBLIC_CF_R2_BUCKET_URL=${NEXT_PUBLIC_CF_R2_BUCKET_URL}
+      - PLUNK_API_KEY=${PLUNK_API_KEY}
+    ports:
+      - "3000:3000"
