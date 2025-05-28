@@ -4,6 +4,7 @@ import { Suspense } from "react";
 import { MDX } from "./mdx";
 import { getBlogPostBySlug } from "~~/blog";
 import IconSocial from "../../../components/iconSocial";
+import he from "he";
 
 const formatDate = (date: string) => {
   return new Date(date).toLocaleDateString("en-US", {
@@ -71,17 +72,17 @@ export default function Post({ params }: { params: { slug: string } }) {
           __html: JSON.stringify({
             "@context": "https://schema.org",
             "@type": "BlogPosting",
-            headline: post.metadata.title,
-            datePublished: post.metadata.date,
-            dateModified: post.metadata.date,
-            description: post.metadata.description,
-            image: `https://davidadarme.vercel.app/og/blog?title=${post.metadata.title}&top=${formatDate(
-              post.metadata.date,
+            headline: he.encode(post.metadata.title),
+            datePublished: he.encode(post.metadata.date),
+            dateModified: he.encode(post.metadata.date),
+            description: he.encode(post.metadata.description),
+            image: `https://davidadarme.vercel.app/og/blog?title=${he.encode(post.metadata.title)}&top=${he.encode(
+              formatDate(post.metadata.date),
             )}`,
-            url: `https://davidadarme.vercel.app/blog/${post.slug}`,
+            url: `https://davidadarme.vercel.app/blog/${he.encode(post.slug)}`,
             author: {
               "@type": "Person",
-              name: author.name,
+              name: he.encode(author.name),
             },
           }),
         }}
