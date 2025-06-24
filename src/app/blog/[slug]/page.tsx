@@ -56,7 +56,7 @@ export async function generateMetadata({
   };
 }
 
-export default function Post({ params }: { params: { slug: string } }) {
+export default async function Post({ params }: { params: { slug: string } }) {
   const post = getBlogPostBySlug(params.slug);
   if (!post) {
     notFound();

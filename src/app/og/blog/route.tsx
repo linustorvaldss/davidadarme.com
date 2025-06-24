@@ -100,7 +100,7 @@ export async function GET(request: Request) {
                 David Adarme
               </p>
               <img
-                src="https://davidadarme.vercel.app/davidadarme.png"
+                src="https://davidadarme.com/davidadarme.png"
                 alt="David's avatar"
                 width={70}
                 height={70}
