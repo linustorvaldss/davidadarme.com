@@ -23,25 +23,44 @@ export default function HomePage() {
             i consider myself a person who likes to learn new things. i am passionate about software development, devops, cloud infrastructure, databases, software architecture, and automation. i'd like to explore and learn more about some topics focused in backend, infra, devops and database. im also interested in pursuing a degree in software enginering later on. i have a strong interest in the world of technology, and i am always looking for new challenges and opportunities to grow in this field. there are some ideas that i'd like to explore like founding a software fintech or create something relevant to share with the world that will make me useful in the swe field. 
           </p>
 
+          <div className="dark:prose-invert">
+            <img
+              alt="Caspar David Friedrich"
+              className="w-full h-auto rounded-lg shadow-lg"
+              src="https://r2.davidadarme.com/about/20250714_125814.jpg"
+            />
+            <p className="prose prose-neutral text-base text-center text-neutral-700 italic dark:prose-invert">
+              Dying For The Right Cause. It's The Most Human Thing We Can Do.
+            </p> 
+          </div>
+
+
+          {/* 20250714_211425.jpg */}
+
           <h3 className="prose prose-neutral text-xl max-w-3xl dark:prose-invert">
             things i like:
           </h3> 
 
           <p className="prose prose-neutral max-w-3xl dark:prose-invert">
-            outside of the software box, i like build legos, collect hot wheels, listen music, watch movies and play with my cats (i'd like to found an animals foundation someday). also i like cars and motorcycles especially bmw sr1000rr and ducati panigale v4s. i like arms and guns, but i don't have any. 
+            outside of the software box, i like build legos, collect hot wheels, hiking, listen music, watch movies and play with my cats (i'd like to found an animals foundation someday). also i like cars and motorcycles especially bmw sr1000rr and ducati panigale v4s (Karl Marx failed to consider the sound a naturally aspirated V12 would make). i like arms and guns, but i don't have any. 
+          </p>
+
+          <div className="dark:prose-invert">
+            <img
+              alt="Caspar David Friedrich"
+              className="w-full h-auto rounded-lg shadow-lg"
+              src="https://r2.davidadarme.com/about/20250714_211425.jpg"
+            />
+            <p className="prose prose-neutral text-base text-center text-neutral-700 italic dark:prose-invert">
+              The shedding of the soul is the last attachment before it restarts.
+            </p> 
+          </div>
+
+          <p className="prose prose-neutral max-w-3xl dark:prose-invert">
+              favorite artists: avicii, lil peep, juice wrld, daft punk, cigarretes after sex, hans zimmers, ludwig göransson, swedish house mafia, blessd
           </p>
 
 {/* 
-          <li className="prose prose-neutral dark:prose-invert">
-            favorite artists: avicii, lil peep, juice wrld, daft punk, cigarretes after sex, hans zimmers, ludwig göransson, swedish house mafia, blessd
-          </li>
-          <li className="prose prose-neutral dark:prose-invert">
-            favorite places to live someday: medellin, edinburgh, stockholm, berlin, amsterdam, zurich, prague, bruges
-          </li>
-          <li className="prose prose-neutral dark:prose-invert">
-            movies i enjoy watching: blade runner 2049, tron, fight club, joker, tenet, john wick, star wars, seven,  watchmen, No Country for older men, There Will Be Blood, drive
-          </li> */}
-
 
           {/* <img
             alt="Memories"
@@ -99,6 +118,9 @@ export default function HomePage() {
         </div>
 
         {/* <div className="mt-4 flex flex-col gap-6"> */}
+
+
+
         <div>
           <br></br>
           <p className="prose prose-neutral max-w-3xl dark:prose-invert">
@@ -115,6 +137,25 @@ export default function HomePage() {
             loading="lazy"
           ></iframe>
         </div>
+
+        <div>
+          <br></br>
+          <p className="prose prose-neutral max-w-3xl dark:prose-invert">
+            my spotify playlist:
+          </p>
+
+          <iframe
+            src="https://open.spotify.com/embed/playlist/1UoBq64rvlANHLPP50sB9x?utm_source=generator"
+            width="100%"
+            height="152"
+            frameBorder="0"
+            allowFullScreen={true}
+            allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+            loading="lazy"
+          ></iframe>
+        </div>
+
+
       </>
     </main>
   );

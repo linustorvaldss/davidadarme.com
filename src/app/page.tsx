@@ -4,8 +4,6 @@ import { NewsletterForm } from "~~/app/blog/newsletter-form";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Analytics } from "@vercel/analytics/react";
 import IconSocial from "~~/components/iconSocial";
-import { env } from "~~/env";
-import { Turnstile } from "next-turnstile";
 
 // function UpRightArrowIcon() {
 //   return (
@@ -69,7 +67,7 @@ function LocationIcon() {
   );
 }
 
-type ExperienceItem = {
+type ItemDetails = {
   name: string;
   link: string;
   position: string;
@@ -84,7 +82,7 @@ function ExperienceSection({
   items,
 }: {
   title: string;
-  items: ExperienceItem[];
+  items: ItemDetails[];
 }) {
   return (
     <section className="text-left">
@@ -118,59 +116,70 @@ function ExperienceSection({
 }
 
 export default function HomePage() {
-  const studyItems = [
+
+const StudyItems = [
     {
       name: "SENA ↗",
       link: "https://www.sena.edu.co/es-co/Paginas/default.aspx",
       position: "Software Analysis and Development Technician",
       date: "Jul. 2022 - Mar. 2025",
-      description: "Learning about software development life cycle, UML, data modeling, relational database (SQL) design and development, and software development in general.",
+      description: "",
       toolkit: ""
     },
-    {
-      name: "Digital Process ↗",
-      link: "https://www.digitalprocess.co/",
-      position: "Software Developer Intern",
-      date: "Sept. 2024 - Mar. 2025",
-      description: "Built and maintained RESTful APIs with Node.js and JavaScript. Maintain NoSQL databases with MongoDB. Deployed applications using Docker and Nginx on Linux servers. Optimized existing applications and fixed bugs across environments. Provided technical support during integration and product delivery.",
-      toolkit: "NodeJS, JavaScript, MongoDB, Git, Docker, Nginx, EJS, React, Linux"
-    },
+
+  ] satisfies ItemDetails[];
+
+  const ItemDetailss = [
     {
       name: "Digital Process ↗",
       link: "https://www.digitalprocess.co/",
       position: "Software Developer (Backend)",
-      date: "Mar. 2024 - Present",
-      description: "Design RESTful APIs using Node.js with TypeScript/JavaScript. Document and automate API workflows with Postman. Implement and optimize MongoDB databases. Support integration using Docker and Podman.",
-      toolkit: "NodeJS, TypeScript, JavaScript, MongoDB, Git, Docker, Podman, Postman"
-    }
-
-  ] satisfies ExperienceItem[];
-
-  // ⤤ ↗ ⬏
-
-  const projectItems = [
-    {
-      name: "Ferresys Saas ↗",
-      link: "https://www.github.com/davidadarme/ferresys",
-      position: "DBA and Deployment",
-      date: "Oct. 2023 - Apr. 2024 (Sena graduation project)",
-      description: "API RESTful designed to register, manage and track products, purchases, sales and customers.",
+      date: "Mar. 2025 - Jun. 2025",
+      description: "",
       toolkit: ""
-      },
-    {
-      name: "Serverless Auth (NoSQL/SQL) ↗",
-      link: "https://gitlab.com/davidadarme/serverless-auth",
-      position: "Backend, DevOps", 
-      date: "In progress",
-      description: "Serverless authentication with choice of SQL or NoSQL databases, with automated AWS and Terraform infrastructure.",
-      toolkit: "AWS (Lambda, RDS/DynamoDB, API Gateway, Cognito), Python, MongoDB, PostgreSQL, Terraform, Act, Jenkins."
     },
     {
-      name: "envVault ↗",
+      name: "ATEK GROUP ↗",
+      link: "https://www.atek-group.com/",
+      position: "Software Developer Intern",
+      date: "Sept. 2024 - Mar. 2025",
+      description: "",
+      toolkit: ""
+    },
+    {
+      name: "Industrias Bicicletas Milan S.A ↗",
+      link: "https://profitbicycles.com/",
+      position: "Graphic and UI/UX designer",
+      date: "Dec. 2023 - Jul. 2024",
+      description: "",
+      toolkit: ""
+    },
+
+  ] satisfies ItemDetails[];
+
+  const projectItems = [
+    // {
+    //   name: "Ferresys Saas ↗",
+    //   link: "https://www.github.com/davidadarme/ferresys",
+    //   position: "DBA and Deployment",
+    //   date: "Oct. 2023 - Apr. 2024 (Sena graduation project)",
+    //   description: "API RESTful designed to register, manage and track products, purchases, sales and customers.",
+    //   toolkit: ""
+    // },
+    // {
+    //   name: "Serverless Auth (NoSQL/SQL) ↗",
+    //   link: "https://gitlab.com/davidadarme/serverless-auth",
+    //   position: "Backend, DevOps", 
+    //   date: "In progress",
+    //   description: "Serverless authentication with choice of SQL or NoSQL databases, with automated AWS and Terraform infrastructure.",
+    //   toolkit: "AWS (Lambda, RDS/DynamoDB, API Gateway, Cognito), Python, MongoDB, PostgreSQL, Terraform, Act, Jenkins."
+    // },
+    {
+      name: "Vaulty ↗",
       link: "",
-      position: "DBA, Backend, DevOps",
+      position: "",
       date: "In progress",
-      description:"Cloud-based secrets and environment variables management platform. It allows you to store, manage, and retrieve sensitive information securely.",
+      description:"Cloud-based secrets and environment variables SaaS management platform. It allows you to store, manage, and retrieve sensitive information securely while working locally.",
       toolkit: "Hexagonal Architecture, Multi-tenant, Go, Redis, PostgreSQL,Terraform, K8S, Prometheus + Grafana, OAuth 2.0, AWS (Secrets Manager, RDS, EC2)"
     },
     {
@@ -181,7 +190,7 @@ export default function HomePage() {
       description: "",
       toolkit: ""
     },
-  ] satisfies ExperienceItem[];
+  ] satisfies ItemDetails[];
 
   const posts = getBlogPosts()
     .sort(
@@ -289,7 +298,7 @@ export default function HomePage() {
 
       <div className="mt-4 flex flex-col gap-6">
       <p className="prose prose-neutral max-w-3xl mb-10 dark:prose-invert">
-        Passionate about software development, DevOps, cloud infrastructure, databases, software architecture, and automation. I am currently seeking hands-on experience to grow my skills and maturity as a backend developer. I am especially eager to learn more about microservices, frameworks, best practices, and building scalable systems. I have experience as Software Developer (Backend mostly) working on monolithic applications using Node.Js, Javascript, Typescript, Express with SQL and NoSQL databases in both the medical and financial domains. In the future, I aim to transition into a DevOps-focused role where I can contribute to building and maintaining reliable, automated, and efficient infrastructure.
+        Passionate about software development, DevOps, cloud infrastructure, backend engineering, databases, software architecture and system automation. I am currently focused on learning more about microservices, frameworks, best practices and building scalable systems to grow my skills as a backend developer. I have experience as a Software Developer (Backend mainly) working in both medical and financial domains. In the future, I aim to transition into a DevOps-focused role where I can contribute to building and maintaining reliable, automated, and efficient infrastructure.
       </p>
 {/* 
         <div>
@@ -305,11 +314,17 @@ export default function HomePage() {
         </div> */}
       </div>
 
-      <div className="grid grid-cols-1 gap-12 md:grid-cols-2">
-        <ExperienceSection title="Experience" items={studyItems} />
-        <ExperienceSection title="Projects" items={projectItems} />
-        {/* <ExperienceSection title="experience" items={experienceItems} /> */}
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+      <div className="flex flex-col">
+        <ExperienceSection title="Education" items={StudyItems} />
+        <ExperienceSection title="Experience" items={ItemDetailss} />
       </div>
+
+      <div>
+        <ExperienceSection title="Projects" items={projectItems} />
+      </div>
+    </div>
+
 
       <h3 className="mb-8 text-xl font-medium">Blog</h3>
       <div className="flex flex-col gap-6">

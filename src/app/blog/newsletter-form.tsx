@@ -9,9 +9,6 @@ import { useState } from "react";
 export function NewsletterForm() {
   const [turnstileToken, setTurnstileToken] = useState<string | null>(null);
 
-
-  console.log("zzz", turnstileToken, setTurnstileToken)
-  
   return (
     <form action={subscribe}>
       <div className="flex w-full gap-4">
