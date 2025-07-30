@@ -121,7 +121,7 @@ export default function HomePage() {
 
 
 
-        <div>
+        {/* <div>
           <br></br>
           <p className="prose prose-neutral max-w-3xl dark:prose-invert">
             my favorite album is avicii's true
@@ -153,7 +153,7 @@ export default function HomePage() {
             allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
             loading="lazy"
           ></iframe>
-        </div>
+        </div> */}
 
 
       </>

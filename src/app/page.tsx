@@ -86,7 +86,7 @@ function ExperienceSection({
 }) {
   return (
     <section className="text-left">
-      <h3 className="mb-8 text-xl font-medium">{title}</h3>
+      <h3 className="text-xl font-medium mb-4">{title}</h3>
 
       {items.map((item, index) => (
         <div key={index} className="mb-8">
@@ -180,7 +180,7 @@ const StudyItems = [
       position: "",
       date: "In progress",
       description:"Cloud-based secrets and environment variables SaaS management platform. It allows you to store, manage, and retrieve sensitive information securely while working locally.",
-      toolkit: "Hexagonal Architecture, Multi-tenant, Go, Redis, PostgreSQL,Terraform, K8S, Prometheus + Grafana, OAuth 2.0, AWS (Secrets Manager, RDS, EC2)"
+      toolkit: "Go, Redis, GraphQL, PostgreSQL, Hexagonal Architecture, Multi-tenant, REST API o gRPC "
     },
     {
       name: "all projects →",
@@ -314,10 +314,10 @@ const StudyItems = [
         </div> */}
       </div>
 
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+    <div className="grid grid-cols-1">
       <div className="flex flex-col">
-        <ExperienceSection title="Education" items={StudyItems} />
-        <ExperienceSection title="Experience" items={ItemDetailss} />
+        {/* <ExperienceSection title="Education" items={StudyItems} /> */}
+        {/* <ExperienceSection title="Experience" items={ItemDetailss} /> */}
       </div>
 
       <div>
