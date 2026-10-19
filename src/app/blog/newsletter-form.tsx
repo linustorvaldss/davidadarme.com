@@ -8,9 +8,12 @@ import { useState } from "react";
 
 export function NewsletterForm() {
   const [turnstileToken, setTurnstileToken] = useState<string | null>(null);
+  const handleSubmit = async (formData: FormData): Promise<void> => {
+    await subscribe(formData);
+  };
 
   return (
-    <form action={subscribe}>
+    <form action={handleSubmit}>
       <div className="flex w-full gap-4">
         <div className="flex-grow">
           <input

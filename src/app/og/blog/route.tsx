@@ -1,16 +1,16 @@
 /* eslint-disable @next/next/no-img-element */
 
 import { ImageResponse } from "next/og";
+import { readFile } from "node:fs/promises";
+import path from "node:path";
 
-export const runtime = "edge";
+const geistBold = readFile(
+  path.join(process.cwd(), "src/app/og/Geist-Bold.otf"),
+).then((font) => new Uint8Array(font).buffer);
 
-const geistBold = fetch(new URL("../Geist-Bold.otf", import.meta.url)).then(
-  (res) => res.arrayBuffer(),
-);
-
-const geistMonoRegular = fetch(
-  new URL("../GeistMono-Regular.otf", import.meta.url),
-).then((res) => res.arrayBuffer());
+const geistMonoRegular = readFile(
+  path.join(process.cwd(), "src/app/og/GeistMono-Regular.otf"),
+).then((font) => new Uint8Array(font).buffer);
 
 export async function GET(request: Request) {
   const geistBoldFont = await geistBold;

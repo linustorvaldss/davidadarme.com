@@ -10,6 +10,15 @@ export default {
         sans: ["var(--font-geist-sans)", ...fontFamily.sans],
         mono: ["var(--font-geist-mono)", ...fontFamily.mono],
       },
+      colors: {
+        theme: {
+          background: "var(--theme-background)",
+          foreground: "var(--theme-foreground)",
+          muted: "var(--theme-muted)",
+          border: "var(--theme-border)",
+          surface: "var(--theme-surface)",
+        },
+      },
     },
   },
   plugins: [typography],

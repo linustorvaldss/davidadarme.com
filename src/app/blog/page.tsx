@@ -1,11 +1,16 @@
 import type { Metadata } from "next";
 import { Link } from "next-view-transitions";
-import { Suspense } from "react";
 import { NewsletterForm } from "~~/app/blog/newsletter-form";
 import { ViewCounter } from "~~/app/blog/view-counter";
 import { getBlogPosts } from "~~/blog";
 import IconSocial from "~~/components/iconSocial";
 import Share from "~~/components/share-buttons";
+
+// @next-codemod-ignore Cache Components adoption: this segment temporarily allows blocking.
+// Remove this opt-out after verifying the segment passes validation without it.
+// See: https://nextjs.org/docs/app/guides/migrating-to-cache-components
+// export const instant = false;
+
 // import Share from "../../components/share-buttons";
 
 

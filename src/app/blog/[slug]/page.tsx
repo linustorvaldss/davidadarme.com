@@ -1,12 +1,17 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { Suspense } from "react";
 import { MDX } from "./mdx";
 import { getBlogPostBySlug } from "~~/blog";
 import IconSocial from "~~/components/iconSocial";
 import Share from "../../../components/share-buttons";
 // import TableOfContents from "~~/components/toc";
 import "~~/styles/globals.css";
+
+// @next-codemod-ignore Cache Components adoption: this segment temporarily allows blocking.
+// Remove this opt-out after verifying the segment passes validation without it.
+// See: https://nextjs.org/docs/app/guides/migrating-to-cache-components
+// export const instant = false;
+
 // import { Avatar, AvatarFallback, AvatarImage } from "~~/components/ui/avatar"
 
 const formatDate = (date: string) => {
@@ -20,9 +25,10 @@ const formatDate = (date: string) => {
 export async function generateMetadata({
   params,
 }: {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 }): Promise<Metadata | undefined> {
-  const post = getBlogPostBySlug(params.slug);
+  const { slug } = await params;
+  const post = getBlogPostBySlug(slug);
   if (!post) {
     return;
   }
@@ -56,8 +62,13 @@ export async function generateMetadata({
   };
 }
 
-export default function Post({ params }: { params: { slug: string } }) {
-  const post = getBlogPostBySlug(params.slug);
+export default async function Post({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
+  const { slug } = await params;
+  const post = getBlogPostBySlug(slug);
   if (!post) {
     notFound();
   }
