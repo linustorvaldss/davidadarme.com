@@ -2,8 +2,41 @@
 @tailwind components;
 @tailwind utilities;
 
+/*
+ * Theme colors
+ *
+ * Edit these values to change the site's black-and-white theme.
+ * The dark values are used automatically when the system prefers dark mode.
+ */
+:root {
+  --theme-background: #ffffff;
+  --theme-foreground: #111111;
+  --theme-muted: #6b7280;
+  --theme-border: #e5e7eb;
+  --theme-surface: #f5f5f5;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --theme-background: #171717;
+    --theme-foreground: #b8b7b7;
+    --theme-muted: #a3a3a3;
+    --theme-border: #404040;
+    --theme-surface: #262626;
+  }
+}
+
 html {
   min-width: 360px;
+  background-color: var(--theme-background);
+  color: var(--theme-foreground);
+  color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) {
+  html {
+    color-scheme: dark;
+  }
 }
 
 @media (prefers-color-scheme: dark) {
@@ -20,6 +53,10 @@ html {
 
 .prose a:not(.anchor) {
   @apply decoration-neutral-400 decoration-[0.1em] underline-offset-2 dark:decoration-neutral-600;
+}
+
+.prose-theme {
+  --tw-prose-body: var(--theme-foreground);
 }
 
 .prose a.anchor {

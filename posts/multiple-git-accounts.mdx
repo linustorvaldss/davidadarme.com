@@ -89,17 +89,42 @@ Recuerda que esto te genera dos archivos, uno con la extensión `.pub` que es la
 Los tipos de claves que se pueden generar son: `dsa`, `ecdsa`, `ed25519`, `ed25519-sk`, `rsa`. Cada uno tiene sus propias características de seguridad, tamaño de clave, velocidad y compatibilidad. A continuación se muestra una tabla con las características de cada tipo de clave:
 
 <div style={{ overflowX: "auto" }}>
-  <Table
-    data={{
-      headers: ["Algoritmo", "Seguridad", "Tamaño de Clave", "Velocidad"],
-      rows: [
-          [ "DSA", "Débil", "1024 bits", "Rápido, pero inseguro"],
-          [ "ECDSA", "Débil", "256, 384, 521 bits", "Rápido"],
-          [ "RSA", "Fuerte", "2048, 3072, 4096 bits", "Lento"],
-          [ "ED25519", "Fuerte", "256 bits", "Muy rápido"],
-      ],
-    }}
-  />
+  <table>
+    <thead>
+      <tr>
+        <th>Algoritmo</th>
+        <th>Seguridad</th>
+        <th>Tamaño de Clave</th>
+        <th>Velocidad</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>DSA</td>
+        <td>Débil</td>
+        <td>1024 bits</td>
+        <td>Rápido, pero inseguro</td>
+      </tr>
+      <tr>
+        <td>ECDSA</td>
+        <td>Débil</td>
+        <td>256, 384, 521 bits</td>
+        <td>Rápido</td>
+      </tr>
+      <tr>
+        <td>RSA</td>
+        <td>Fuerte</td>
+        <td>2048, 3072, 4096 bits</td>
+        <td>Lento</td>
+      </tr>
+      <tr>
+        <td>ED25519</td>
+        <td>Fuerte</td>
+        <td>256 bits</td>
+        <td>Muy rápido</td>
+      </tr>
+    </tbody>
+  </table>
 </div>
 
 ---

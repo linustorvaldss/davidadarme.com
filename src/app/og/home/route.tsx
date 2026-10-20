@@ -1,10 +1,10 @@
 import { ImageResponse } from "next/og";
+import { readFile } from "node:fs/promises";
+import path from "node:path";
 
-export const runtime = "edge";
-
-const geistBold = fetch(new URL("../Geist-Bold.otf", import.meta.url)).then(
-  (res) => res.arrayBuffer(),
-);
+const geistBold = readFile(
+  path.join(process.cwd(), "src/app/og/Geist-Bold.otf"),
+).then((font) => new Uint8Array(font).buffer);
 
 export async function GET(request: Request) {
   const geistBoldData = await geistBold;

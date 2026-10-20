@@ -4,31 +4,49 @@ import React from "react";
 import { Children, createElement } from "react";
 import { codeToHtml } from "shiki";
 
-function Table({ data }: { data: { headers: string[]; rows: string[][] } }) {
-  let headers = data.headers.map((header, index) => (
-    <th key={index} className="p-2 text-left">
-      {header}
-    </th>
-  ));
-  let rows = data.rows.map((row, index) => (
-    <tr key={index}>
-      {row.map((cell, cellIndex) => (
-        <td key={cellIndex} className="p-2 text-left">
-          {cell}
-        </td>
-      ))}
-    </tr>
-  ));
+// type TableData = {
+//   headers: string[];
+//   rows: string[][];
+// };
 
-  return (
-    <table className="w-full border-collapse">
-      <thead>
-        <tr>{headers}</tr>
-      </thead>
-      <tbody>{rows}</tbody>
-    </table>
-  );
-}
+// type TableProps = Partial<TableData> & {
+//   data?: TableData;
+// };
+
+// function Table({ data, headers, rows }: TableProps) {
+//   const tableData = data ?? (headers && rows ? { headers, rows } : undefined);
+
+//   if (!tableData) {
+//     throw new Error("Table requires headers and rows");
+//   }
+
+//   const { headers: tableHeaders, rows: tableRows } = tableData;
+
+//   const renderedHeaders = tableHeaders.map((header, index) => (
+//     <th key={index} className="p-2 text-left">
+//       {header}
+//     </th>
+//   ));
+
+//   const renderedRows = tableRows.map((row, index) => (
+//     <tr key={index}>
+//       {row.map((cell, cellIndex) => (
+//         <td key={cellIndex} className="p-2 text-left">
+//           {cell}
+//         </td>
+//       ))}
+//     </tr>
+//   ));
+
+//   return (
+//     <table className="w-full border-collapse">
+//       <thead>
+//         <tr>{renderedHeaders}</tr>
+//       </thead>
+//       <tbody>{renderedRows}</tbody>
+//     </table>
+//   );
+// }
 
 function CustomLink({
   href,
@@ -53,7 +71,8 @@ function CustomImage(props: React.ImgHTMLAttributes<HTMLImageElement>) {
   const RESOURCE_URL = process.env.NEXT_PUBLIC_CF_R2_BUCKET_URL;
   // console.log("RESOURCE_URL:", RESOURCE_URL);
 
-  const src = `${RESOURCE_URL?.replace(/\/$/, '')}/${props.src?.replace(/^\//, '')}`;
+  const imagePath = typeof props.src === "string" ? props.src : "";
+  const src = `${RESOURCE_URL?.replace(/\/$/, "")}/${imagePath.replace(/^\//, "")}`;
   // console.log("Image URL:", src);
 
   return <img {...props} src={src} alt={props.alt} className="rounded-lg" />;
@@ -82,9 +101,10 @@ async function Pre({
     const html = await codeToHtml(String(codeElement?.props.children).replace(/`/g, ''), {
       lang,
       themes: {
-        dark: "github-dark-default",
+        dark: "plastic",
+        // one-dark-pro, plastic, material-theme-darker
         // dark: [ "aurora-x", "houston"]
-        light: "github-light-default",
+        light: "ayu-light",
       },
     });
 
@@ -136,7 +156,7 @@ const components = {
   h5: createHeading(5),
   h6: createHeading(6),
   pre: Pre,
-  Table,
+  // Table,
 };
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any

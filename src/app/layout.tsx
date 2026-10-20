@@ -9,8 +9,13 @@ import { ViewTransitions } from "next-view-transitions";
 // import Footer from "../app/footer";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import "~~/styles/globals.css";
 // import "react-toastify/dist/ReactToastify.css";
+
+// @next-codemod-ignore Cache Components adoption: this segment temporarily allows blocking.
+// Remove this opt-out after verifying the segment passes validation without it.
+// See: https://nextjs.org/docs/app/guides/migrating-to-cache-components
+// export const instant = false;
+
 
 
 export const metadata: Metadata = {
@@ -43,23 +48,15 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <ViewTransitions>
       <html
         lang="en"
-        className={clx(
-          // "bg-white text-black", // Cambia a blanco y negro
-          GeistSans.variable,
-          GeistMono.variable,
-        )}
+        className={clx(GeistSans.variable, GeistMono.variable)}
       >
 
-        <body className="mx-4 mb-40 mt-8 flex max-w-3xl flex-col antialiased md:flex-row lg:mx-auto bg-white text-black dark:bg-black dark:text-white">
+        <body className="bg-theme-background text-theme-foreground mx-4 mb-40 mt-8 flex max-w-3xl flex-col antialiased md:flex-row lg:mx-auto">
           <main className="mt-6 flex min-w-0 flex-auto flex-col px-2 md:px-0">
             <Navbar />
             {children}

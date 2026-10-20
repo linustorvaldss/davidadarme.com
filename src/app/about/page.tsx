@@ -1,8 +1,37 @@
-export default function HomePage() {
+import type { Metadata } from "next";
+
+// @next-codemod-ignore Cache Components adoption: this segment temporarily allows blocking.
+// Remove this opt-out after verifying the segment passes validation without it.
+// See: https://nextjs.org/docs/app/guides/migrating-to-cache-components
+// export const instant = false;
+
+const aboutImage =
+  "https://r2.davidadarme.com/about/about_Alexandre_Cabanel_-_Fallen_Angel.webp";
+
+export const metadata: Metadata = {
+  title: "About me",
+  description: "About David Adarme, software developer and DevOps enthusiast.",
+  openGraph: {
+    title: "About me",
+    description: "About David Adarme, software developer and DevOps enthusiast.",
+    url: "https://davidadarme.com/about",
+    images: [{ url: aboutImage, alt: "The Fallen Angel by Alexandre Cabanel" }],
+  },
+  twitter: {
+    title: "About me",
+    description: "About David Adarme, software developer and DevOps enthusiast.",
+    card: "summary_large_image",
+    images: [aboutImage],
+  },
+};
+
+export default function AboutPage() {
 
   return (
     <main className="text-left">
       <>
+        <link rel="preload" as="image" href={aboutImage} type="image/webp" />
+
         {/* <img
           alt="Memories"
           className="w-full h-auto rounded-lg shadow-lg"
@@ -12,9 +41,12 @@ export default function HomePage() {
         {/* <br></br> */}
 
         <img
-          alt="Memories"
-          className="w-full h-auto rounded-lg shadow-lg"
-          src="https://r2.davidadarme.com/about/about_Alexandre_Cabanel_-_Fallen_Angel.webp"
+          alt="The Fallen Angel by Alexandre Cabanel"
+          className="h-auto w-full rounded-lg shadow-lg"
+          decoding="async"
+          fetchPriority="high"
+          loading="eager"
+          src={aboutImage}
         />
 
         <div className="mt-4 flex flex-col gap-6">
@@ -165,4 +197,3 @@ export default function HomePage() {
     </main>
   );
 }
-

@@ -5,6 +5,11 @@ import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Analytics } from "@vercel/analytics/react";
 import IconSocial from "~~/components/iconSocial";
 
+// @next-codemod-ignore Cache Components adoption: this segment temporarily allows blocking.
+// Remove this opt-out after verifying the segment passes validation without it.
+// See: https://nextjs.org/docs/app/guides/migrating-to-cache-components
+// export const instant = false;
+
 // function UpRightArrowIcon() {
 //   return (
 //     <svg
@@ -85,33 +90,36 @@ function ExperienceSection({
   items: ItemDetails[];
 }) {
   return (
-    <section className="text-left">
-      <h3 className="text-xl font-medium mb-4">{title}</h3>
+    <div>
+      <h3 className="mb-4 text-xl font-medium">{title}</h3>
+      <section className="grid grid-cols-1 md:grid-cols-3">
+        {items.map((item, index) => (
+          <div key={index} className="mb-3">
+            <a
+              href={item.link}
+              target="_blank"
+              className="font-medium underline decoration-neutral-400 decoration-[0.1em] underline-offset-2 dark:decoration-neutral-600"
+            >
+              {item.name}
+            </a>
 
-      {items.map((item, index) => (
-        <div key={index} className="mb-8">
-          <a
-            href={item.link}
-            target="_blank"
-            className="font-medium underline decoration-neutral-400 decoration-[0.1em] underline-offset-2 dark:decoration-neutral-600"
-          >
-            {item.name}
-          </a>
+            <p>{item.position}</p>
 
-          {/* <div className="flex items-center gap-2 mt-3"> */}
-          <p>{item.position}</p>
-          <p className="flex text-neutral-700 dark:text-neutral-400 text-xs gap-2 mt-1">
-            {item.date}
-          </p>
+            <p className="text-neutral-700 dark:text-neutral-300">
+              {item.description}
+            </p>
 
-          <p className="mt-3 text-neutral-700 dark:text-neutral-300">
-            {item.description}
-          </p>
+            <p className="flex text-xs text-neutral-700 dark:text-neutral-400">
+              {item.date}
+            </p>
 
-          <p className="mt-3" style={{ color: '#6d6d6d' }}>{item.toolkit}</p>
-        </div>
-      ))}
-    </section>
+            <p className="mt-3" style={{ color: "#6d6d6d" }}>
+              {item.toolkit}
+            </p>
+          </div>
+        ))}
+      </section>
+    </div>
   );
 }
 
@@ -129,12 +137,20 @@ const StudyItems = [
 
   ] satisfies ItemDetails[];
 
-  const ItemDetailss = [
+  const ExperienceItems = [
+    {
+      name: "Ie Group ↗",
+      link: "https://www.iegrupo.co/",
+      position: "Software Developer",
+      date: "Apr. 2026 - Present",
+      description: "",
+      toolkit: ""
+    },
     {
       name: "Digital Process ↗",
       link: "https://www.digitalprocess.co/",
-      position: "Software Developer (Backend)",
-      date: "Mar. 2025 - Jun. 2025",
+      position: "Software Developer",
+      date: "Apr. 2025 - Apr. 2026",
       description: "",
       toolkit: ""
     },
@@ -146,15 +162,6 @@ const StudyItems = [
       description: "",
       toolkit: ""
     },
-    {
-      name: "Industrias Bicicletas Milan S.A ↗",
-      link: "https://profitbicycles.com/",
-      position: "Graphic and UI/UX designer",
-      date: "Dec. 2023 - Jul. 2024",
-      description: "",
-      toolkit: ""
-    },
-
   ] satisfies ItemDetails[];
 
   const projectItems = [
@@ -178,7 +185,7 @@ const StudyItems = [
       name: "Vaulty ↗",
       link: "",
       position: "",
-      date: "In progress",
+      date: "In progress", 
       description:"Cloud-based secrets and environment variables SaaS management platform. It allows you to store, manage, and retrieve sensitive information securely while working locally.",
       toolkit: "Go, Redis, GraphQL, PostgreSQL, Hexagonal Architecture, Multi-tenant, REST API o gRPC "
     },
@@ -295,11 +302,10 @@ const StudyItems = [
       {/* <script src="https://platform.linkedin.com/badges/js/profile.js" async defer type="text/javascript"></script>
       <div className="badge-base LI-profile-badge" data-locale="es_ES" data-size="large" data-theme="dark" data-type="HORIZONTAL" data-vanity="davidadarme" data-version="v1"><a className="badge-base__link LI-simple-link" href="https://co.linkedin.com/in/davidadarme?trk=profile-badge">David Adarme</a></div> */}
               
-
       <div className="mt-4 flex flex-col gap-6">
-      <p className="prose prose-neutral max-w-3xl mb-10 dark:prose-invert">
-        Passionate about Software Engineering/Development/Architecture, DevOps/SRE/PE, Cloud Infrastructure, Database Administration and Systems Automation. I am also pursuing a Software Engineering degree and learning more about some topics focused in scalable systems, automation, and cloud technologies. Currently, I am expanding my expertise in microservices architecture, and conceptual technologies; always looking for new challenges and opportunities to grow in IT.
-      </p>
+        <p className="prose prose-neutral prose-theme mb-10 max-w-3xl">
+          Passionate about software engineering, backend development, system architecture, DevOps, SRE, Platform Engineering, and cloud infrastructure. Interested in building scalable, reliable, and maintainable systems through automation, modern architectural patterns, and engineering best practices. Currently expanding my knowledge of DevOps, Infrastructure as Code (IaC), cloud platforms such as AWS and Azure, distributed systems, microservices, caching strategies, messaging systems, and infrastructure automation.
+        </p>
 {/* 
         <div>
           <iframe
@@ -317,16 +323,15 @@ const StudyItems = [
     <div className="grid grid-cols-1">
       <div className="flex flex-col">
         {/* <ExperienceSection title="Education" items={StudyItems} /> */}
-        {/* <ExperienceSection title="Experience" items={ItemDetailss} /> */}
+        <ExperienceSection title="Experience" items={ExperienceItems} />
       </div>
 
-      <div>
+      {/* <div>
         <ExperienceSection title="Projects" items={projectItems} />
-      </div>
+      </div> */}
     </div>
 
-
-      <h3 className="mb-8 text-xl font-medium">Blog</h3>
+      {/* <h3 className="mb-8 text-xl font-medium">Blog</h3>
       <div className="flex flex-col gap-6">
         {posts.map((post) => (
           <Link key={post.slug} href={`/blog/${post.slug}`} className="">
@@ -346,23 +351,22 @@ const StudyItems = [
               </p>
             </div>
           </Link>
-        ))}
+        ))} */}
 
-        <Link
+        {/* <Link
           href="/blog"
           className="decoration-neutral-4000 mt-4 font-medium underline decoration-[0.1em] underline-offset-2 dark:decoration-neutral-600"
         >
           All posts →
-        </Link>
+        </Link> */}
         <div className="space-y-6">
-          <p className="font-medium">Subscribe to receive new posts.</p>
+          <p className="text-lg font-medium">Subscribe to Newsletter</p>
           <NewsletterForm />
           <SpeedInsights />
           <Analytics />
           
         </div>
-      </div>
+      {/* </div> */}
     </main>
   );
 }
-
