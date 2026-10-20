@@ -26,7 +26,10 @@ export const subscribe = async (formData: FormData) => {
   );
 
   if (expectedHostnames.size === 0) {
-    return { error: "turnstile verification is not configured", success: false };
+    return {
+      error: "turnstile verification is not configured",
+      success: false,
+    };
   }
 
   let verification: {
@@ -61,6 +64,7 @@ export const subscribe = async (formData: FormData) => {
   }
 
   if (
+    !verification ||
     verification.success !== true ||
     verification.action !== "newsletter" ||
     typeof verification.hostname !== "string" ||
