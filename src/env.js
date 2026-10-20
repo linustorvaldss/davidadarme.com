@@ -9,6 +9,8 @@ export const env = createEnv({
   server: {
     NODE_ENV: z.enum(["development", "test", "production"]),
     PLUNK_API_KEY: z.string(),
+    CF_TURNSTILE_SECRET_KEY: z.string(),
+    TURNSTILE_HOSTNAMES: z.string().default("davidadarme.com"),
     SENTRY_DSN: z.string().url(),
     // REDIS_URL: z.string().url(),
     // REDIS_TOKEN: z.string(),
@@ -20,7 +22,7 @@ export const env = createEnv({
    * `NEXT_PUBLIC_`.
    */
   client: {
-    NEXT_PUBLIC_CF_R2_BUCKET_URL: z.string().url(),
+    NEXT_PUBLIC_CF_R2_BUCKET_URL: z.string(),
     NEXT_PUBLIC_CF_TURNSTILE_SITE_KEY: z.string(),
     // NEXT_PUBLIC_CLIENTVAR: z.string(),
   },
@@ -33,6 +35,8 @@ export const env = createEnv({
     NODE_ENV: process.env.NODE_ENV,
     NEXT_PUBLIC_CF_R2_BUCKET_URL: process.env.NEXT_PUBLIC_CF_R2_BUCKET_URL,
     PLUNK_API_KEY: process.env.PLUNK_API_KEY,
+    CF_TURNSTILE_SECRET_KEY: process.env.CF_TURNSTILE_SECRET_KEY,
+    TURNSTILE_HOSTNAMES: process.env.TURNSTILE_HOSTNAMES,
     SENTRY_DSN: process.env.SENTRY_DSN,
     NEXT_PUBLIC_CF_TURNSTILE_SITE_KEY: process.env.NEXT_PUBLIC_CF_TURNSTILE_SITE_KEY,
     // REDIS_URL: process.env.REDIS_URL,

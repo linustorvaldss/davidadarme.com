@@ -30,6 +30,7 @@ export function NewsletterForm() {
       <div className="mt-4">
         <Turnstile
           siteKey={env.NEXT_PUBLIC_CF_TURNSTILE_SITE_KEY}
+          action="newsletter"
           onVerify={setTurnstileToken}
           onExpire={() => setTurnstileToken(null)}
         />
