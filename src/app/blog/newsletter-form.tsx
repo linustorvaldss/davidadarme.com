@@ -8,8 +8,24 @@ import { useState } from "react";
 
 export function NewsletterForm() {
   const [turnstileToken, setTurnstileToken] = useState<string | null>(null);
+  const [widgetVersion, setWidgetVersion] = useState(0);
+  const [message, setMessage] = useState("");
   const handleSubmit = async (formData: FormData): Promise<void> => {
-    await subscribe(formData);
+    setMessage("");
+    try {
+      const result = await subscribe(formData);
+      setMessage(
+        result.success
+          ? "Thanks for subscribing!"
+          : (result.error ?? "Unable to subscribe. Please try again."),
+      );
+    } catch {
+      setMessage("Unable to subscribe. Please try again.");
+    } finally {
+      // Siteverify tokens are single-use, even if the subscription fails afterward.
+      setTurnstileToken(null);
+      setWidgetVersion((version) => version + 1);
+    }
   };
 
   return (
@@ -18,6 +34,8 @@ export function NewsletterForm() {
         <div className="flex-grow">
           <input
             type="email"
+            required
+            aria-label="Email address"
             name="email"
             placeholder="email"
             autoComplete="off"
@@ -26,16 +44,33 @@ export function NewsletterForm() {
         </div>
         <SubmitButton disabled={!turnstileToken} />
       </div>
-      
+
       <div className="mt-4">
         <Turnstile
+          key={widgetVersion}
           siteKey={env.NEXT_PUBLIC_CF_TURNSTILE_SITE_KEY}
+          action="newsletter"
+          responseField={false}
           onVerify={setTurnstileToken}
           onExpire={() => setTurnstileToken(null)}
+          onError={() => setTurnstileToken(null)}
+          onTimeout={() => setTurnstileToken(null)}
+          onUnsupported={() => {
+            setTurnstileToken(null);
+            setMessage(
+              "Verification is unavailable in this browser. Please try another browser.",
+            );
+          }}
         />
-        <input type="hidden" name="cf-turnstile-response" value={turnstileToken ?? ""} />
+        <input
+          type="hidden"
+          name="cf-turnstile-response"
+          value={turnstileToken ?? ""}
+        />
       </div>
-      <div></div>
+      <p role="status" aria-live="polite" className="mt-2 text-sm">
+        {message}
+      </p>
     </form>
   );
 }
