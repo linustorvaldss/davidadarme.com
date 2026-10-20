@@ -4,31 +4,49 @@ import React from "react";
 import { Children, createElement } from "react";
 import { codeToHtml } from "shiki";
 
-function Table({ data }: { data: { headers: string[]; rows: string[][] } }) {
-  let headers = data.headers.map((header, index) => (
-    <th key={index} className="p-2 text-left">
-      {header}
-    </th>
-  ));
-  let rows = data.rows.map((row, index) => (
-    <tr key={index}>
-      {row.map((cell, cellIndex) => (
-        <td key={cellIndex} className="p-2 text-left">
-          {cell}
-        </td>
-      ))}
-    </tr>
-  ));
+// type TableData = {
+//   headers: string[];
+//   rows: string[][];
+// };
 
-  return (
-    <table className="w-full border-collapse">
-      <thead>
-        <tr>{headers}</tr>
-      </thead>
-      <tbody>{rows}</tbody>
-    </table>
-  );
-}
+// type TableProps = Partial<TableData> & {
+//   data?: TableData;
+// };
+
+// function Table({ data, headers, rows }: TableProps) {
+//   const tableData = data ?? (headers && rows ? { headers, rows } : undefined);
+
+//   if (!tableData) {
+//     throw new Error("Table requires headers and rows");
+//   }
+
+//   const { headers: tableHeaders, rows: tableRows } = tableData;
+
+//   const renderedHeaders = tableHeaders.map((header, index) => (
+//     <th key={index} className="p-2 text-left">
+//       {header}
+//     </th>
+//   ));
+
+//   const renderedRows = tableRows.map((row, index) => (
+//     <tr key={index}>
+//       {row.map((cell, cellIndex) => (
+//         <td key={cellIndex} className="p-2 text-left">
+//           {cell}
+//         </td>
+//       ))}
+//     </tr>
+//   ));
+
+//   return (
+//     <table className="w-full border-collapse">
+//       <thead>
+//         <tr>{renderedHeaders}</tr>
+//       </thead>
+//       <tbody>{renderedRows}</tbody>
+//     </table>
+//   );
+// }
 
 function CustomLink({
   href,
@@ -84,7 +102,6 @@ async function Pre({
       lang,
       themes: {
         dark: "plastic",
-
         // one-dark-pro, plastic, material-theme-darker
         // dark: [ "aurora-x", "houston"]
         light: "ayu-light",
@@ -139,7 +156,7 @@ const components = {
   h5: createHeading(5),
   h6: createHeading(6),
   pre: Pre,
-  Table,
+  // Table,
 };
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
