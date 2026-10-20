@@ -1,8 +1,8 @@
-// @ts-check
+/* @ts-check */
 
-/** 
- * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation. This is especially useful 
- * for Docker builds. 
+/**
+ * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation.
+ * This is especially useful for Docker builds.
  */
 await import("./src/env.js");
 
@@ -11,41 +11,48 @@ import { withSentryConfig } from "@sentry/nextjs/config";
 /** @type {import("next").NextConfig} */
 const config = {
   reactStrictMode: true,
+
   transpilePackages: ["next-mdx-remote"],
+
   env: {
-    NEXT_PUBLIC_CF_R2_BUCKET_URL: process.env.NEXT_PUBLIC_CF_R2_BUCKET_URL,
+    NEXT_PUBLIC_CF_R2_BUCKET_URL:
+      process.env.NEXT_PUBLIC_CF_R2_BUCKET_URL,
   },
+
   images: {
     remotePatterns: [
-      { protocol: 'https', hostname: `${process.env.NEXT_PUBLIC_CF_R2_BUCKET_URL}` },
+      {
+        protocol: "https",
+        hostname: process.env.NEXT_PUBLIC_CF_R2_BUCKET_URL ?? "",
+      },
     ],
-    formats: ['image/avif', 'image/webp'],
+    formats: ["image/avif", "image/webp"],
   },
 };
 
 const sentryConfig = {
   org: "david-0e",
   project: "davidadarme",
-  sentryUrl: "https://sentry.io/",
+  url: "https://sentry.io/",
 
-  // Only print logs for uploading source maps in CI
+  // Only print logs for uploading source maps in CI.
   silent: !process.env.CI,
 
-  // Upload a larger set of source maps for prettier stack traces (increases build time)
+  // Upload more source maps for better stack traces.
   widenClientFileUpload: true,
 
-  // Automatically annotate React components to show their full name in breadcrumbs and session replay
+  // Annotate React components in breadcrumbs and session replay.
   reactComponentAnnotation: {
     enabled: true,
   },
 
-  // Hides source maps from generated client bundles
+  // Hide source maps from generated client bundles.
   hideSourceMaps: true,
 
-  // Automatically tree-shake Sentry logger statements to reduce bundle size
+  // Remove Sentry logger statements from bundles.
   disableLogger: true,
 
-  // Enables automatic instrumentation of Vercel Cron Monitors.
+  // Automatically instrument Vercel Cron Monitors.
   automaticVercelMonitors: true,
 };
 

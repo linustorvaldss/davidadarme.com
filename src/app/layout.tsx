@@ -63,12 +63,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             {/* <Footer /> */}
           </main>
           <ToastContainer position="bottom-right" autoClose={2000} hideProgressBar />
-          
-          <script
-              src="https://developers.cloudflare.com/turnstile/get-started/client-side-rendering/"
-              async
-              defer
-            />
         </body>
       </html>
       
