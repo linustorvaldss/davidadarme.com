@@ -15,15 +15,14 @@ const config = {
   transpilePackages: ["next-mdx-remote"],
 
   env: {
-    NEXT_PUBLIC_CF_R2_BUCKET_URL:
-      process.env.NEXT_PUBLIC_CF_R2_BUCKET_URL,
+    NEXT_PUBLIC_CF_R2_BUCKET_URL: process.env.NEXT_PUBLIC_CF_R2_BUCKET_URL,
   },
 
   images: {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: process.env.NEXT_PUBLIC_CF_R2_BUCKET_URL ?? "",
+        hostname: String(process.env.NEXT_PUBLIC_CF_R2_BUCKET_URL).split("://")[1] || "",
       },
     ],
     formats: ["image/avif", "image/webp"],

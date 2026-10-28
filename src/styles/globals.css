@@ -72,7 +72,69 @@ html {
 }
 
 .prose pre {
-  @apply overflow-x-auto rounded-lg border border-neutral-200 bg-neutral-50 dark:border-neutral-900 dark:bg-neutral-900;
+  @apply overflow-x-auto rounded-lg border border-neutral-200 bg-neutral-50 dark:border-neutral-950 dark:bg-neutral-900;
+}
+
+.code-block {
+  @apply my-6 overflow-hidden rounded-xl border border-neutral-200 bg-neutral-50 dark:border-neutral-800 dark:bg-neutral-900;
+}
+
+.code-block-header {
+  @apply flex h-10 items-center justify-between border-b border-neutral-200 bg-neutral-50 px-4 text-xs dark:border-neutral-800 dark:bg-neutral-950;
+}
+
+.code-block-language {
+  @apply font-mono text-neutral-500 dark:text-neutral-400;
+}
+
+.code-block-copy {
+  @apply rounded-md border border-transparent px-2 py-1 font-sans text-neutral-500 transition-colors hover:border-neutral-200 hover:bg-white hover:text-neutral-900 dark:hover:border-neutral-700 dark:hover:bg-neutral-800 dark:hover:text-neutral-100;
+}
+
+.code-block-content {
+  @apply overflow-x-auto bg-neutral-50 p-4 text-[0.8125rem] dark:bg-neutral-950;
+}
+
+.code-block-content pre {
+  @apply m-0 block w-full bg-transparent p-0;
+}
+
+.code-block-content code {
+  @apply block w-full bg-transparent p-0;
+  border: 0;
+}
+
+.code-block-content .shiki {
+  @apply m-0 block w-full p-0;
+  background-color: transparent !important;
+}
+
+.code-block-content .shiki span {
+  background-color: transparent !important;
+}
+
+.code-block-content .shiki code {
+  @apply block w-full;
+}
+
+.code-block-content .line {
+  display: inline-block;
+  min-width: 100%;
+  box-sizing: border-box;
+}
+
+.code-block-content .shiki .line.highlighted {
+  background-color: rgba(92, 91, 91, 0.06) !important;
+}
+
+@media (prefers-color-scheme: dark) {
+  .code-block-content .shiki .line.highlighted {
+    background-color: rgb(0, 44, 27) !important;
+  }
+}
+
+.code-block-content .line-number {
+  @apply mr-4 inline-block w-6 select-none text-right text-neutral-400 dark:text-neutral-600;
 }
 
 .prose pre::-webkit-scrollbar {
@@ -164,7 +226,6 @@ code {
   box-shadow: 0 2px 16px 0 rgba(0,0,0,0.08);
 }
 
-
 .Toastify__toast--success {
   background: #fff !important;
   color: #111 !important;
@@ -206,7 +267,7 @@ code {
     background: #111 !important;
     color: #FF0000 !important;
   }
-  
+
   .Toastify__close-button {
     color: #fff !important;
   }

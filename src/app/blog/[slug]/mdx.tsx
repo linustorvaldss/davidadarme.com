@@ -3,6 +3,11 @@ import { Link } from "next-view-transitions";
 import React from "react";
 import { Children, createElement } from "react";
 import { codeToHtml } from "shiki";
+import {
+  transformerMetaHighlight,
+  transformerRenderLineNumber,
+} from "@shikijs/transformers";
+import { CodeBlock } from "~~/components/code-block";
 
 // type TableData = {
 //   headers: string[];
@@ -78,6 +83,31 @@ function CustomImage(props: React.ImgHTMLAttributes<HTMLImageElement>) {
   return <img {...props} src={src} alt={props.alt} className="rounded-lg" />;
 }
 
+function remarkCodeMeta() {
+  return (tree: {
+    children?: Array<{
+      type?: string;
+      meta?: string | null;
+      data?: { hProperties?: Record<string, string> };
+      children?: Array<unknown>;
+    }>;
+  }) => {
+    const visit = (nodes?: typeof tree.children) => {
+      nodes?.forEach((node) => {
+        if (node?.type === "code" && node.meta) {
+          node.data ??= {};
+          node.data.hProperties ??= {};
+          node.data.hProperties["data-meta"] = node.meta;
+        }
+
+        visit(node?.children as typeof tree.children);
+      });
+    };
+
+    visit(tree.children);
+  };
+}
+
 async function Pre({
   children,
   ...props
@@ -87,28 +117,78 @@ async function Pre({
     (child) => React.isValidElement(child) && child.type === "code",
   ) as React.ReactElement<HTMLPreElement> | undefined;
 
-  const className = codeElement?.props?.className ?? "";
+  const codeProps = codeElement?.props as
+    | (React.HTMLAttributes<HTMLElement> & {
+        "data-meta"?: string;
+        dataMeta?: string;
+        meta?: string;
+      })
+    | undefined;
+  const preProps = props as React.HTMLAttributes<HTMLPreElement> & {
+    "data-meta"?: string;
+    dataMeta?: string;
+    meta?: string;
+  };
+  const className = codeProps?.className ?? "";
   const isCodeBlock =
     typeof className === "string" && className.startsWith("language-");
 
   if (isCodeBlock) {
-    const lang = className.split(" ")[0]?.split("-")[1] ?? "";
+    const [languageClass, ...classTokens] = className.split(" ");
+    const lang = languageClass?.split("-")[1] ?? "";
+    
+    // Obtenemos los metadatos que inyecta MDX (donde vienen los tokens como {1})
+    const meta = [
+      codeProps?.["data-meta"],
+      codeProps?.dataMeta,
+      codeProps?.meta,
+      preProps["data-meta"],
+      preProps.dataMeta,
+      preProps.meta,
+      ...classTokens,
+    ]
+      .filter(Boolean)
+      .join(" ");
+    
+    const filename = meta.match(
+      /(?:title|filename)=(?:"([^"]+)"|'([^']+)'|(\S+))/i,
+    );
+    const showLineNumbers = /\bshowLineNumbers\b/i.test(meta);
 
     if (!lang) {
       return <code {...props}>{children}</code>;
     }
 
-    const html = await codeToHtml(String(codeElement?.props.children).replace(/`/g, ''), {
+    const code = String(codeProps?.children ?? "").replace(/\n$/, "");
+    
+    // El transformerMetaHighlight se encarga automáticamente de parsear {1}, {3-5}, etc.
+    const transformers = [transformerMetaHighlight()];
+
+    if (showLineNumbers) {
+      transformers.push(transformerRenderLineNumber());
+    }
+
+    const html = await codeToHtml(code, {
       lang,
+      meta: {
+        __raw: meta,
+      },
+      transformers,
       themes: {
-        dark: "plastic",
-        // one-dark-pro, plastic, material-theme-darker
-        // dark: [ "aurora-x", "houston"]
+        dark: "one-dark-pro",
         light: "ayu-light",
       },
     });
 
-    return <div dangerouslySetInnerHTML={{ __html: html }} />;
+    return (
+      <CodeBlock
+        code={code}
+        html={html}
+        language={lang}
+        filename={filename?.[1] ?? filename?.[2] ?? filename?.[3]}
+        showLineNumbers={showLineNumbers}
+      />
+    );
   }
 
   // If not, return the component as is
@@ -164,6 +244,16 @@ export function MDX(props: any) {
   return (
     <MDXRemote
       {...props}
+      options={{
+        ...(props.options ?? {}),
+        mdxOptions: {
+          ...(props.options?.mdxOptions ?? {}),
+          remarkPlugins: [
+            ...(props.options?.mdxOptions?.remarkPlugins ?? []),
+            remarkCodeMeta,
+          ],
+        },
+      }}
       // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
       components={{ ...components, ...(props.components ?? {}) }}
     />
